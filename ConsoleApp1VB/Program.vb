@@ -107,13 +107,98 @@ Module Program
             Case Else
               Console.WriteLine("Opción no válida. Por favor, seleccione una opción válida.")
           End Select
-        Case 2
-          ' Lógica para gestionar alumnos (CRUD)
-          Console.WriteLine("Gestión de Alumnos")
-          ' Aquí puedes implementar las opciones para agregar, editar, eliminar y mostrar alumnos
-        Case 3
-          Console.WriteLine("Saliendo del programa...")
-        Case Else
+                Case 2
+                    Console.WriteLine("Gestión de Alumnos")
+                    Console.WriteLine("1. Agregar Alumno")
+                    Console.WriteLine("2. Editar Alumno")
+                    Console.WriteLine("3. Eliminar Alumno")
+                    Console.WriteLine("4. Mostrar Alumnos")
+                    Console.WriteLine("5. Almacenar en Archivo")
+                    Console.Write("Ingrese su opción:")
+                    Dim opcionAlumno As Integer
+                    opcionAlumno = Convert.ToInt32(Console.ReadLine())
+
+                    Select Case opcionAlumno
+                        Case 1
+                            Console.WriteLine("Agregar Alumno")
+                            ' Aquí puedes implementar la lógica para agregar un alumno
+                            ''Pedir los datos del alumno y almacenarlos en la lista de alumnos
+                            Dim nuevoAlumno As New Alumno()
+                            Console.Write("Ingrese el ID del alumno:")
+                            nuevoAlumno.Id = Convert.ToInt32(Console.ReadLine())
+                            Console.Write("Ingrese el nombre del alumno:")
+                            nuevoAlumno.Nombre = Console.ReadLine()
+                            Console.Write("Ingrese los apellidos del alumno:")
+                            nuevoAlumno.Apellidos = Console.ReadLine()
+                            Console.Write("Ingrese el teléfono del alumno:")
+                            nuevoAlumno.Telefono = Console.ReadLine()
+                            Console.Write("Ingrese la especialidad del alumno:")
+                            nuevoAlumno.Especialidad = Console.ReadLine()
+                            Console.Write("Ingrese la matrícula del alumno:")
+                            nuevoAlumno.Matricula = Console.ReadLine()
+                            alumnos.Add(nuevoAlumno)
+
+                        Case 2
+                            Console.WriteLine("Editar Alumno")
+                            ' Aquí puedes implementar la lógica para editar un alumno
+                            ''Pedir el ID del alumno a editar y actualizar sus datos
+                            Console.WriteLine("Ingrese el ID del alumno a editar:")
+                            Dim idEditar As Integer
+                            idEditar = Convert.ToInt32(Console.ReadLine())
+                            Dim alumnoEditar As Alumno = alumnos.Find(Function(a) a.Id = idEditar)
+                            If alumnoEditar IsNot Nothing Then
+                                Console.WriteLine("Ingrese el nuevo nombre del alumno:")
+                                alumnoEditar.Nombre = Console.ReadLine()
+                                Console.WriteLine("Ingrese los nuevos apellidos del alumno:")
+                                alumnoEditar.Apellidos = Console.ReadLine()
+                                Console.WriteLine("Ingrese el nuevo teléfono del alumno:")
+                                alumnoEditar.Telefono = Console.ReadLine()
+                                Console.WriteLine("Ingrese la nueva especialidad del alumno:")
+                                alumnoEditar.Especialidad = Console.ReadLine()
+                                Console.WriteLine("Ingrese la nueva matrícula del alumno:")
+                                alumnoEditar.Matricula = Console.ReadLine()
+                            Else
+                                Console.WriteLine("Alumno no encontrado.")
+
+
+                            End If
+
+                        Case 3
+                            Console.WriteLine("Eliminar Alumno")
+                            ' Aquí puedes implementar la lógica para eliminar un alumno
+                            ''Pedir el ID del alumno a eliminar y eliminarlo de la lista de alumnos
+                            Console.WriteLine("Ingrese el ID del alumno a eliminar:")
+                            Dim idEliminar As Integer
+                            idEliminar = Convert.ToInt32(Console.ReadLine())
+                            Dim alumnoEliminar As Alumno = alumnos.Find(Function(a) a.Id = idEliminar)
+                            If alumnoEliminar IsNot Nothing Then
+                                alumnos.Remove(alumnoEliminar)
+                                Console.WriteLine("Alumno eliminado.")
+                            Else
+                                Console.WriteLine("Alumno no encontrado.")
+                            End If
+
+                        Case 4
+                            Console.WriteLine("Mostrar Alumnos")
+                            ' Aquí puedes implementar la lógica para mostrar los alumnos
+                            For Each alumno As Alumno In alumnos
+                                Console.WriteLine(alumno.ToString())
+                            Next
+                            Console.WriteLine("Pulsa una tecla para continuar ...")
+                            Console.ReadKey()
+
+                        Case 5
+                            Console.WriteLine("Almacenar en Archivo")
+                            ' Aquí puedes implementar la lógica para almacenar los alumnos en un archivo de texto
+                            ' Archivos.GuardarAlumnos(alumnos, "alumnos.txt") ' Implementa este método en la clase Archivos
+                            Console.WriteLine("Alumnos almacenados en el archivo 'alumnos.txt'.")
+
+                    End Select
+                Case 3
+                    Console.WriteLine("Saliendo del programa...")
+
+                    Environment.Exit(0)
+                Case Else
           Console.WriteLine("Opción no válida. Por favor, seleccione una opción válida.")
       End Select
       Console.Clear()
