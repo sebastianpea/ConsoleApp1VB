@@ -6,13 +6,18 @@ Module Program
 
     Dim docentes As New List(Of Docente)()
     Dim alumnos As New List(Of Alumno)()
-    ''Cargar los docentes del archivo de texto al iniciar el programa
-    '' si el archivo existe, importar los docentes desde el archivo de texto
-    If File.Exists("docentes.txt") Then
-      docentes = Archivos.ImportarDocentes("docentes.txt")
-    End If
-    ' Crear menu para escojer entre docentes y alumnos y depende del seleccionado mostrar un CRUD para cada uno
-    Dim opcion As Integer
+        ''Cargar los docentes del archivo de texto al iniciar el programa
+        '' si el archivo existe, importar los docentes desde el archivo de texto
+        If File.Exists("docentes.txt") Then
+            docentes = Archivos.ImportarDocentes("docentes.txt")
+        End If
+
+        If File.Exists("alumnos.txt") Then
+            alumnos = Archivos.ImportarAlumnos("alumnos.txt")
+        End If
+
+        ' Crear menu para escojer entre docentes y alumnos y depende del seleccionado mostrar un CRUD para cada uno
+        Dim opcion As Integer
     Do
 
       Console.WriteLine("1. Gestionar Docentes")
@@ -52,10 +57,15 @@ Module Program
               Console.Write("Ingrese la especialidad del docente:")
               nuevoDocente.Especialidad = Console.ReadLine()
               Console.Write("Ingrese la materia del docente:")
-              nuevoDocente.Materia = Console.ReadLine()
-              docentes.Add(nuevoDocente)
+                            nuevoDocente.Materia = Console.ReadLine()
+                            Dim idExisteDocente As Docente = docentes.Find(Function(a) a.Id = nuevoDocente.Id)
+                            If idExisteDocente IsNot Nothing Then
+                                Console.WriteLine("Error: Ya existe un docente con ese ID. No se puede agregar.")
+                                Continue Do
+                            End If
+                            docentes.Add(nuevoDocente)
 
-            Case 2
+                        Case 2
               Console.WriteLine("Editar Docente")
               ' Aquí puedes implementar la lógica para editar un docente
               ''Pedir el ID del docente a editar y actualizar sus datos
@@ -136,6 +146,11 @@ Module Program
                             nuevoAlumno.Especialidad = Console.ReadLine()
                             Console.Write("Ingrese la matrícula del alumno:")
                             nuevoAlumno.Matricula = Console.ReadLine()
+                            Dim idExisteAlumno As Alumno = alumnos.Find(Function(a) a.Id = nuevoAlumno.Id)
+                            If idExisteAlumno IsNot Nothing Then
+                                Console.WriteLine("Ya existe un alumno con ese ID. No se puede agregar.")
+                                Continue Do
+                            End If
                             alumnos.Add(nuevoAlumno)
 
                         Case 2
@@ -189,6 +204,8 @@ Module Program
 
                         Case 5
                             Console.WriteLine("Almacenar en Archivo")
+
+                            Archivos.GuardarAlumnos(alumnos, "alumnos.txt") ' Implementa este método en la clase Archivos
                             ' Aquí puedes implementar la lógica para almacenar los alumnos en un archivo de texto
                             ' Archivos.GuardarAlumnos(alumnos, "alumnos.txt") ' Implementa este método en la clase Archivos
                             Console.WriteLine("Alumnos almacenados en el archivo 'alumnos.txt'.")
