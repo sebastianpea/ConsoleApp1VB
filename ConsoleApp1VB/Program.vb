@@ -60,7 +60,7 @@ Module Program
                             nuevoDocente.Materia = Console.ReadLine()
                             Dim idExisteDocente As Docente = docentes.Find(Function(a) a.Id = nuevoDocente.Id)
                             If idExisteDocente IsNot Nothing Then
-                                Console.WriteLine("Error: Ya existe un docente con ese ID. No se puede agregar.")
+                                Console.WriteLine("Ya existe un docente con ese ID. No se puede agregar.")
                                 Continue Do
                             End If
                             docentes.Add(nuevoDocente)
